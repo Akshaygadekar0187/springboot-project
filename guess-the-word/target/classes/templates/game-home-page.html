@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Word</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .word {
+            font-size: 2rem;
+            letter-spacing: 10px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .feedback {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        .complete {
+            color: green;
+            font-size: 1.5rem;
+            margin-top: 30px;
+        }
+
+        .hint-btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">🎮 Guess the Word Game 🎮</h1>
+        
+        <!-- Score and Tries -->
+        <div class="row mb-3">
+            <div class="col-md-6 text-end">
+                <strong>Score:</strong> <span id="score" th:text="${score}">0</span>
+            </div>
+            <div class="col-md-6 text-start">
+                <strong>Tries Left:</strong> <span id="tries" th:text="${remainingTries}">5</span>
+            </div>
+        </div>
+
+        <!-- Word Display -->
+        <div class="word mb-4">
+            <span th:text="${wordToDisplay}"></span>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback mb-4" th:if="${guessResult != ''}">
+            <span th:text="${guessResult}"></span>
+        </div>
+
+        <!-- Complete Message -->
+        <div class="complete" th:if="${isComplete}">
+            🎉 Congratulations! The word was <span th:text="${actualWord}"></span>!
+        </div>
+
+        <!-- Guess Form -->
+        <form action="/guess" method="get" th:if="!${isComplete}">
+            <div class="input-group mb-3">
+                <input type="text" name="letter" maxlength="1" required placeholder="Enter a letter" class="form-control">
+                <button class="btn btn-primary" type="submit">Guess</button>
+            </div>
+        </form>
+
+        <!-- Hint Button -->
+        <a href="/hint" class="btn btn-warning hint-btn" th:if="!${isComplete}">Get a Hint</a>
+    
+     <a href="/reload" class="btn btn-warning hint-btn" th:if="!${isComplete}">Reload</a>
+    </div>
+</body>
+</html>
