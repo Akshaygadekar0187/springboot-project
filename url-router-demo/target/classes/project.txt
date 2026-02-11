@@ -1,0 +1,210 @@
+# URL Router Dashboard Project Report
+
+## 1. Project Overview
+
+The **URL Router Dashboard** is a Spring Boot–based web application designed to demonstrate core backend concepts such as configuration management, 
+URL rewriting, and server isolation. The project simulates enterprise-grade behaviors similar to Microsoft IIS features (Web.config, URL Rewrite, 
+and Application Pools) using Java technologies.
+
+The system allows users to manage shortened URLs through a dashboard interface, redirect requests dynamically, and track visit counts. 
+It also supports running multiple application instances simultaneously to demonstrate runtime configuration overrides and isolation.
+
+---
+
+## 2. Objectives
+
+The main objectives of this project are:
+
+* To understand configuration-driven application behavior in Spring Boot
+* To implement URL rewriting using filters and internal forwarding
+* To demonstrate server isolation using multiple JVM instances
+* To build a dashboard for managing dynamic URL mappings
+* To track usage analytics and logging
+
+---
+
+## 3. Technologies Used
+
+* **Backend:** Java, Spring Boot
+* **Database:** MySQL
+* **Frontend:** Thymeleaf, Bootstrap, JavaScript
+* **Build Tool:** Maven
+* **Server:** Embedded Tomcat
+* **Libraries:** Spring Data JPA, Chart.js
+
+---
+
+## 4. System Architecture
+
+The application follows a layered architecture:
+
+* **Controller Layer:** Handles HTTP requests and routing
+* **Service Layer:** Contains business logic
+* **Repository Layer:** Interacts with the database
+* **View Layer:** Dashboard UI using Thymeleaf
+
+Request flow:
+
+Browser → Embedded Tomcat → Filter → DispatcherServlet → Controller → Service → Repository → Database → Response
+
+---
+
+## 5. Core Features
+
+### 5.1 Configuration Management
+
+This project uses `application.properties` as the configuration center, similar to Web.config in IIS.
+
+Features include:
+
+* External configuration loading
+* Environment-based settings
+* Runtime configuration overrides
+
+Spring Boot configuration priority:
+
+1. Command-line arguments (highest priority)
+2. application.properties
+3. Default configuration
+
+This allows flexible deployment and scaling.
+
+---
+
+### 5.2 URL Rewriting
+
+URL rewriting is implemented using Servlet Filters.
+
+Key concepts:
+
+* Filters intercept incoming requests
+* Internal forwarding routes requests without changing the browser URL
+* Clean and user-friendly URLs are supported
+
+Example:
+
+`/go/google` internally forwards to a redirect handler that resolves the actual URL dynamically.
+
+---
+
+### 5.3 Server Isolation
+
+The project demonstrates server isolation similar to IIS Application Pools.
+
+Each instance:
+
+* Runs in a separate JVM
+* Has an independent lifecycle
+* Uses its own port
+* Can be started or stopped without affecting others
+
+This simulates container-like isolation.
+
+---
+
+### 5.4 Dashboard Management
+
+The dashboard provides:
+
+* Add, edit, and delete URL mappings
+* Search and filtering
+* Pagination
+* Analytics charts for visit counts
+* Dark mode UI
+
+All data is stored dynamically in MySQL.
+
+---
+
+### 5.5 Analytics and Logging
+
+The system tracks:
+
+* Visit counts per URL
+* Usage analytics displayed via charts
+* Console logging for request tracking
+
+This supports monitoring and performance analysis.
+
+---
+
+## 6. Running the Application
+
+To demonstrate server isolation, run the application in two terminals.
+
+### Terminal 1
+
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8081"
+
+### Terminal 2
+
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8082"
+
+---
+
+### Test URL Redirection
+
+http://localhost:8081/go/google
+http://localhost:8082/go/google
+
+---
+
+### Check Running Instances
+
+http://localhost:8081/instance
+http://localhost:8082/instance
+
+Each instance runs independently with runtime port overrides.
+
+---
+
+## 7. Key Learning Outcomes
+
+Through this project, the following concepts are demonstrated:
+
+* Spring Boot configuration hierarchy
+* Request lifecycle and filter processing
+* Internal request forwarding
+* Multi-instance deployment
+* MVC architecture
+* Database persistence with JPA
+* Dashboard UI integration
+* Logging and analytics
+
+---
+
+## 8. Conclusion
+
+The URL Router Dashboard project provides a practical understanding of modern backend architecture using Spring Boot.
+ It bridges theoretical concepts such as configuration management, request routing, and server isolation with hands-on implementation.
+
+This project is suitable for academic demonstrations, portfolio showcases, and interview discussions, as it reflects real-world backend engineering practices.
+
+---
+
+## 9. Future Enhancements
+
+Potential improvements include:
+
+* Authentication and role-based access
+* REST API exposure
+* Docker containerization
+* Load balancing
+* Caching mechanisms
+* Rate limiting
+* Advanced analytics
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
